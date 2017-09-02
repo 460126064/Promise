@@ -21,18 +21,18 @@ class _Promise {
       _exec(cbs) {
           //如果允诺对象传入的是一个函数，我们就执行，不是直接resolve
           if(this.isFunction(cbs)) {
-              cbs(() => {
+              cbs((...args) => {
                  //成功回调，更新状态
                  this._status = this.STATUS.RESOLVE;
                  //获取传入参数转换为数组
-                 this.succArgs = [...arguments];
+                 this.succArgs = [...args];
                  //调取内部_resolve方法
                  this._resolve.apply(this,this.succArgs);
-              },() => {
+              },(...args) => {
                  //失败回调
                  this._status = this.STATUS.REJECT;
                  //获取传入参数转换为数组
-                 this.failArgs = [...arguments];
+                 this.failArgs = [...args];
                  //调取内部_reject方法
                  this._reject.apply(this,this.failArgs);                         
               })
